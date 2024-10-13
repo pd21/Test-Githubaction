@@ -4,8 +4,7 @@ on:
         types: [my-event]
 
 jobs:
-    build:
-        name: run-workflow
+    run-triggered-workflow:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -13,4 +12,4 @@ jobs:
                 fetch-depth: 0
             - name: print trigger details
               run: |
-                echo "I am called yeyyyyyyy!!!!"
+                echo "I am called via repository dispatch yeyyyyyyy!!!!"
