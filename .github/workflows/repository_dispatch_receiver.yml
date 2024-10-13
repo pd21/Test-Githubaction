@@ -13,5 +13,4 @@ jobs:
                 fetch-depth: 0
             - name: print trigger details
               run: |
-                echo ${{ github.event.client_payload.github.action }}
-                echo ${{ github.event.client_payload.github.actor }}
+                echo "I am called yeyeyeyey!!!!"
