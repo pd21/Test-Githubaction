@@ -1,0 +1,12 @@
+name: run the workflow
+on:
+    repository_dispatch:
+        types: ["my-event2"]
+        
+jobs:
+    run-triggered-workflow:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print trigger details
+              run: |
+                echo "hey hello"        

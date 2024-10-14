@@ -1,0 +1,19 @@
+name: Debug
+on:
+    workflow_dispatch:
+
+jobs:
+    publish:
+        name: POC for triggering workflow
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clean up runner
+              run: |
+                echo "cleaning up previous run"
+            - name: trigger the action of other repo
+              uses: peter-evans/repository-dispatch@v2
+              with:
+                token: ${{ secrets.REPO_ACCESS_TOKEN }}
+                repository: pd21/Test-Githubaction
+                event-type: my-event2
+              
