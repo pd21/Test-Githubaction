@@ -12,9 +12,11 @@ jobs:
                 echo "hey hello"
             - name: Checkout code
               uses: actions/checkout@v3    
-                
+    
             - name: Read version from package.json using Node.js
               id: read_version
               run: |
                   version=$(node -p "require('./package.json').version")
-                  echo "version=$version" >> $GITHUB_ENV    
+                  echo "version=$version" >> $GITHUB_ENV   
+            - name: Use version in subsequent steps
+              run: echo "The version from package.json is ${{ env.version }}"       
