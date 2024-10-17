@@ -16,7 +16,9 @@ jobs:
             - name: Read version from package.json using Node.js
               id: read_version
               run: |
-                  version=$(node -p "require('./package.json').version")
-                  echo "version=$version" >> $GITHUB_ENV   
+                  latest_version=$(node -p "require('./package.json').version")
+                  echo "latest_version=$latest_version" >> $GITHUB_ENV 
+                  
+                  
             - name: Use version in subsequent steps
               run: echo "The version from package.json is ${{ env.version }}"       
