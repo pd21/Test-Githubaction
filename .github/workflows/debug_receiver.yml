@@ -10,6 +10,8 @@ jobs:
             - name: print trigger details
               run: |
                 echo "hey hello"
+            - name: Checkout code
+              uses: actions/checkout@v3    
                 
             - name: Read version from package.json using Node.js
               id: read_version
