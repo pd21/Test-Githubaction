@@ -9,4 +9,10 @@ jobs:
         steps:
             - name: print trigger details
               run: |
-                echo "hey hello"        
+                echo "hey hello"
+                
+            - name: Read version from package.json using Node.js
+              id: read_version
+              run: |
+                  version=$(node -p "require('./package.json').version")
+                  echo "version=$version" >> $GITHUB_ENV    
