@@ -21,4 +21,7 @@ jobs:
                   
                   
             - name: Use version in subsequent steps
-              run: echo "The version from package.json is ${{ env.latest_version }}"       
+              run: echo "The version from package.json is ${{ env.latest_version }}"     
+              
+            - name: Test run
+              run: echo "Testingggg"  
