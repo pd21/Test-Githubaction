@@ -17,12 +17,12 @@ jobs:
             - name: Read version from package.json using Node.js
               id: read_version
               run: |
-                  latest_version=$(node -p "require('./package.json').version")
-                  echo "latest_version=$latest_version" >> $GITHUB_ENV 
+                  LATEST_VERSION=$(node -p "require('./package.json').version")
+                  echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT 
                   
                   
             - name: Use version in subsequent steps
-              run: echo "The version from package.json is ${{ env.latest_version }}"     
+              run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}"     
               
             - name: Test run
               run: echo "Testingggg heeloo"  
