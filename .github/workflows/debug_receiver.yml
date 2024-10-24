@@ -18,7 +18,7 @@ jobs:
               id: read_version
               run: |
                   LATEST_VERSION=$(node -p "require('./package.json').version")
-                  echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUPUT 
+                  echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT 
                   
                   
             - name: Use version in subsequent steps
