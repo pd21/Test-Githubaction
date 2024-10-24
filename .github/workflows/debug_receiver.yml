@@ -22,7 +22,7 @@ jobs:
                   
                   
             - name: Use version in subsequent steps
-              run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}"     
+              run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}-test"     
               
             - name: Test run
               run: echo "Testingggg heeloo"  
