@@ -44,5 +44,5 @@ jobs:
                     echo "The tag format is valid."
                   else
                     echo "VALID_FORMAT=false"  >> $GITHUB_OUTPUT
-                    echo "The tag format is not valid.
+                    echo "The tag format is not valid."
                   fi
