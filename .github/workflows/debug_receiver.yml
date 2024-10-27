@@ -30,7 +30,8 @@ jobs:
             - name: Assign a value to tag type
               id: check_tag_type
               run: |
-                  TAG_TYPE = 2024-10    
+                  TAG_TYPE = 2024-10
+                  echo "TAG_TYPE=$TAG_TYPE" >> $GITHUB_OUTPUT     
 
             - name: Checking if tag if YYYY-MM or monthly-v2
               run: |
