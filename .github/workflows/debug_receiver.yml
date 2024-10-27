@@ -34,7 +34,7 @@ jobs:
               run: |
 
                   # define variables      
-                  tests=16
+                  tests=2024-02
                   failures=2
 
                   # set them as GitHub ENV variables
