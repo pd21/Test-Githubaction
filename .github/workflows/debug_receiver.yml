@@ -32,15 +32,9 @@ jobs:
                
                   
               run: |
-
-                  # define variables      
-                  tests=2024-02
-                  failures=2
-
-                  # set them as GitHub ENV variables
-                  echo "Tests=$tests" >> $GITHUB_OUTPUT
-                  echo "Failures=$failures" >> $GITHUB_OUTPUT  
+                  CURRENT_TAG=2024-02
+                  echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_OUTPUT
 
             - name: Checking if tag if YYYY-MM or monthly-v2
               run: |
-                   echo "the tag is ${{ steps.check_tag_type.outputs.Tests}}"
+                   echo "the tag is ${{ steps.check_tag_type.outputs.CURRENT_TAG}}"
