@@ -25,4 +25,13 @@ jobs:
               run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}-test"     
               
             - name: Test run
-              run: echo "Testingggg heeloo"  
+              run: echo "Testingggg heeloo" 
+              
+            - name: Assign a value to tag type
+              id: check_tag_type
+              run: |
+                  TAG_TYPE = 2024-10    
+
+            - name: Checking if tag if YYYY-MM or monthly-v2
+              run: |
+                   echo "the tag is ${{ steps.check_tag_type.outputs.TAG_TYPE}}"
