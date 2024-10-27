@@ -25,13 +25,24 @@ jobs:
               run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}-test"     
               
             - name: Test run
-              run: echo "Testingggg heeloo" 
+              run: echo "Test heeloo" 
               
             - name: Assign a value to tag type
               id: check_tag_type
               run: |
-                  TAG_TYPE = "2024-10"
-                  echo "TAG_TYPE=$TAG_TYPE" >> $GITHUB_OUTPUT     
+                  TAG_TYPE = 2024
+
+                  echo "TAG_TYPE=$TAG_TYPE" >> $GITHUB_OUTPUT  
+                  
+              # run: |
+
+              #     # define variables      
+              #     tests=16
+              #     failures=2
+
+              #     # set them as GitHub ENV variables
+              #     echo "Tests=$tests" >> $GITHUB_ENV
+              #     echo "Failures=$failures" >> $GITHUB_ENV    
 
             - name: Checking if tag if YYYY-MM or monthly-v2
               run: |
