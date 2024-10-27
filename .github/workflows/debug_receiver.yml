@@ -37,4 +37,12 @@ jobs:
 
             - name: Checking if tag if YYYY-MM or monthly-v2
               run: |
-                   echo "the tag is ${{ steps.check_tag_type.outputs.CURRENT_TAG}}"
+                  echo "the tag is ${{ steps.check_tag_type.outputs.CURRENT_TAG}}"
+
+                  if [[ ${{ steps.check_tag_type.outputs.CURRENT_TAG }} =~ ^[0-9]{4}-[0-9]{2}$ ]] || [[ ${{ steps.check_tag_type.outputs.CURRENT_TAG }} == "monthly-v2" ]]; then
+                    echo "VALID_FORMAT=true"  >> $GITHUB_OUTPUT
+                    echo "The tag format is valid."
+                  else
+                    echo "VALID_FORMAT=false"  >> $GITHUB_OUTPUT
+                    echo "The tag format is not valid.
+                  fi
