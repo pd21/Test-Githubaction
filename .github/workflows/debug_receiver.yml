@@ -32,7 +32,7 @@ jobs:
                
                   
               run: |
-                  CURRENT_TAG=v2.272.3
+                  CURRENT_TAG=2014-07-patch
                   echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_OUTPUT
 
             - name: Checking if tag if YYYY-MM or monthly-v2
