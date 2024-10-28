@@ -5,17 +5,8 @@ on:
     workflow_dispatch:       
         
 jobs:
-    first-job:
-      runs-on: ubuntu-latest
-      steps:
-        - name: First job
-          run: |
-            echo "this is the first job"
-            
-
     run-triggered-workflow:
         runs-on: ubuntu-latest
-        needs: first-job
         steps:
             - name: print trigger details
               run: |
@@ -65,13 +56,21 @@ jobs:
             - name: print only if the it is not valid
               run: |
                 echo "the format is not valid I guess"
+    first-job:
+      runs-on: ubuntu-latest
+      needs: run-triggered-workflow
+      steps:
+        - name: First job
+          run: |
+            echo "this is the first job"             
 
     test:
-      name: Test
-      needs: first-job
+      name: second-job
+      needs: run-triggered-workflow
       runs-on: ubuntu-latest
       steps:
         - name: second job
           run: |
             echo "second job test"
+
 
