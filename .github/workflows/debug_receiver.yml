@@ -36,6 +36,7 @@ jobs:
                   echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_OUTPUT
 
             - name: Checking if tag if YYYY-MM or monthly-v2
+              id: valid_format
               run: |
                   echo "the tag is ${{ steps.check_tag_type.outputs.CURRENT_TAG}}"
 
@@ -46,3 +47,12 @@ jobs:
                     echo "VALID_FORMAT=false"  >> $GITHUB_OUTPUT
                     echo "The tag format is not valid."
                   fi
+
+            - name: trigger only if format is valid
+              if: ${{ steps.valid_format.outputs.VALID_FORMAT == 'true'}}
+              run: |
+                echo "This format is valid we can trigger a publish" 
+                  
+            - name: print only if the it is not valid
+              run: |
+                echo "the format is not valid I guess"
