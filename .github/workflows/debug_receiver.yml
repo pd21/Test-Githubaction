@@ -53,17 +53,15 @@ jobs:
               run: |
                 echo "BULK_MERGE=abcd"  >> $GITHUB_OUTPUT  
 
-            # - name: check both conditions
-            #   id: is_bulk_merge
-            #   run: |
-            #     BULK_MERGE="${{ steps.bulk_merge.outputs.BULK_MERGE }}"
-            #     VALID_FORMAT="${{ steps.valid_format.outputs.VALID_FORMAT }}"
-
-            #     if [[ "$BULK_MERGE" == "BULK_MERGE" && "$VALID_FORMAT" == "true" ]]; then
-            #       echo "IS_BULK_MERGE=true"  >> $GITHUB_OUTPUT
-            #     else
-            #       echo "IS_BULK_MERGE=false"  >> $GITHUB_OUTPUT
-            #     fi    
+            - name: check both conditions
+              id: is_bulk_merge
+              run: |
+                if [[ ${{ steps.bulk_merge.outputs.BULK_MERGE }} == 'BULK_MERGE' && ${{ steps.valid_format.outputs.VALID_FORMAT}} == 'true' ]];then
+                  echo "IS_BULK_MERGE=true" >> $GITHUB_OUTPUT 
+                else  
+                  echo "IS_BULK_MERGE=false" >> $GITHUB_OUTPUT 
+                fi  
+            
             - name: print
               run: |
                 echo "what the  ${{ steps.bulk_merge.outputs.BULK_MERGE }} "    
