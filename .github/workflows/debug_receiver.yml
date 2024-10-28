@@ -63,7 +63,7 @@ jobs:
                 fi    
             - name: print
               run: |
-                echo "what the  ${{ steps.is_bulk_merge.outputs.IS_BULK_MERGE }} "    
+                echo "what the  ${{ steps.bulk_merge.outputs.BULK_MERGE }} "    
 
     first-job:
       runs-on: ubuntu-latest
