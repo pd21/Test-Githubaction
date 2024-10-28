@@ -56,7 +56,10 @@ jobs:
             - name: check both conditions
               id: is_bulk_merge
               run: |
-                if [[ ${{ steps.bulk_merge.outputs.BULK_MERGE == 'BULK_MERGE'  && steps.valid_format.outputs.VALID_FORMAT == 'true'}} ]]; then
+                BULK_MERGE="${{ steps.bulk_merge.outputs.BULK_MERGE }}"
+                VALID_FORMAT="${{ steps.valid_format.outputs.VALID_FORMAT }}"
+
+                if [[ "$BULK_MERGE" == "BULK_MERGE" && "$VALID_FORMAT" == "true" ]]; then
                   echo "IS_BULK_MERGE=true"  >> $GITHUB_OUTPUT
                 else
                   echo "IS_BULK_MERGE=false"  >> $GITHUB_OUTPUT
