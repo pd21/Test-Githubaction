@@ -7,6 +7,8 @@ on:
 jobs:
     run-triggered-workflow:
         runs-on: ubuntu-latest
+        outputs: 
+          is_format_valid: ${{ steps.valid_format.outputs.VALID_FORMAT }}
         steps:
             - name: print trigger details
               run: |
@@ -56,9 +58,11 @@ jobs:
             - name: print only if the it is not valid
               run: |
                 echo "the format is not valid I guess"
+
     first-job:
       runs-on: ubuntu-latest
       needs: run-triggered-workflow
+      if: needs.run-triggered-workflow.outputs.is_format_valid == 'true'
       steps:
         - name: First job
           run: |
@@ -67,6 +71,7 @@ jobs:
     test:
       name: second-job
       needs: run-triggered-workflow
+      if: needs.run-triggered-workflow.outputs.is_format_valid != 'true'
       runs-on: ubuntu-latest
       steps:
         - name: second job
