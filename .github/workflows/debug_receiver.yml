@@ -51,7 +51,7 @@ jobs:
             - name: set the bulk merge type
               id: bulk_merge
               run: |
-                echo "BULK_MERGE=BULK_MERE"  >> $GITHUB_OUTPUT  
+                echo "BULK_MERGE=abcd"  >> $GITHUB_OUTPUT  
 
             - name: check both conditions
               id: is_bulk_merge
@@ -61,6 +61,9 @@ jobs:
                 else
                   echo "IS_BULK_MERGE=false"  >> $GITHUB_OUTPUT
                 fi    
+            - name: print
+              run: |
+                echo "what the  ${{ steps.is_bulk_merge.outputs.IS_BULK_MERGE }} "    
 
     first-job:
       runs-on: ubuntu-latest
