@@ -68,7 +68,7 @@ jobs:
 
     test:
       name: Test
-      needs: run-triggered-workflow
+      needs: first-job
       runs-on: ubuntu-latest
       steps:
         - name: second job
