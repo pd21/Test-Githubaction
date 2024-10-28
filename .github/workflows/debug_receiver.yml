@@ -56,3 +56,12 @@ jobs:
             - name: print only if the it is not valid
               run: |
                 echo "the format is not valid I guess"
+
+    test:
+      name: Test
+      runs-on: ubuntu-latest
+      steps:
+        - name: second job
+          run: |
+            echo "second job test"
+
