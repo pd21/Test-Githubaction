@@ -1,7 +1,5 @@
 name: run the workflow
 on:
-    repository_dispatch:
-        types: ["my-event2"]
     workflow_dispatch:       
         
 jobs:
@@ -57,10 +55,18 @@ jobs:
               id: is_bulk_merge
               run: |
                 if [[ ${{ steps.bulk_merge.outputs.BULK_MERGE }} == 'BULK_MERGE' && ${{ steps.valid_format.outputs.VALID_FORMAT}} == 'true' ]];then
-                  echo "IS_BULK_MERGE=true" >> $GITHUB_OUTPUT 
+                  echo "IS_BULK_MERGE=true" >> $GITHUB_OUTPUT
                 else  
                   echo "IS_BULK_MERGE=false" >> $GITHUB_OUTPUT 
                 fi  
+                
+            - name: trigger the action of other repo
+              if: steps.is_bulk_merge.outputs.IS_BULK_MERGE == 'true'
+              uses: peter-evans/repository-dispatch@v2
+              with:
+                token: ${{ secrets.REPO_ACCESS_TOKEN }}
+                repository: pd21/Test-Githubaction
+                event-type: my-event2    
             
             - name: print
               run: |
@@ -69,7 +75,7 @@ jobs:
     first-job:
       runs-on: ubuntu-latest
       needs: run-triggered-workflow
-      if: needs.run-triggered-workflow.outputs.bulk_merge == 'true'
+      if: needs.run-triggered-workflow.outputs.bulk_merge != 'true'
       steps:
         - name: First job
           run: |
@@ -77,8 +83,6 @@ jobs:
 
     test:
       name: second-job
-      needs: run-triggered-workflow
-      if: needs.run-triggered-workflow.outputs.bulk_merge != 'true'
       runs-on: ubuntu-latest
       steps:
         - name: second job
