@@ -1,5 +1,7 @@
 name: Debug
 on:
+    repository_dispatch:
+        types: ["my-event2"]
     workflow_dispatch:
 
 jobs:
@@ -10,10 +12,7 @@ jobs:
             - name: Clean up runner
               run: |
                 echo "cleaning up previous run"
-            - name: trigger the action of other repo
-              uses: peter-evans/repository-dispatch@v2
-              with:
-                token: ${{ secrets.REPO_ACCESS_TOKEN }}
-                repository: pd21/Test-Githubaction
-                event-type: my-event2
+            - name: Repository dispatch test
+              run: |
+                echo "I am called!"
               
