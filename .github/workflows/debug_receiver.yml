@@ -66,7 +66,7 @@ jobs:
               with:
                 token: ${{ secrets.REPO_ACCESS_TOKEN }}
                 repository: pd21/Test-Githubaction
-                event-type: my-event2    
+                event-type: my-event3   
             
             - name: print
               run: |
@@ -88,5 +88,6 @@ jobs:
         - name: second job
           run: |
             echo "second job test"
+            echo "${{ github.event.ref}}"
 
 
