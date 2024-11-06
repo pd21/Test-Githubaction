@@ -83,7 +83,8 @@ jobs:
 
     test:
       name: second-job
-      if: startsWith(github.event.ref,'abcd')
+      needs: run-triggered-workflow
+      if: startsWith(github.event.ref,'refs') && ${{ needs.run-triggered-workflow.outputs.bulk_merge != 'true' }}
       runs-on: ubuntu-latest
       steps:
         - name: second job
