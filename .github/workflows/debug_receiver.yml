@@ -83,7 +83,7 @@ jobs:
 
     test:
       name: second-job
-      if: startsWith(github.event.ref,'refs')
+      if: startsWith(github.event.ref,'abcd')
       runs-on: ubuntu-latest
       steps:
         - name: second job
