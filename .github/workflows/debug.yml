@@ -18,6 +18,9 @@ jobs:
             - name: Repository dispatch test
               run: |
                 echo "I am called!"
+            
+            - name: List files in the directory
+              run: ls -la    
 
             - name: print the details of the packages
               id: abc
