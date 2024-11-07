@@ -20,8 +20,15 @@ jobs:
                 echo "I am called!"
 
             - name: print the details of the packages
+              id: abc
               run: |
                 echo "the name of the package is ${{ matrix.packages }}"
+                NAMES = $(node -p "require("./package.json').name")
+                echo "NAMES=$NAMES" >> $GITHUB_OUTPUT
+            
+            - name: Print the details
+              run: |
+                  echo "the name is ${{steps.abc.outputs.NAMES }}" 
                 
             - name: Read the details for package
               id: package_details
