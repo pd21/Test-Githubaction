@@ -1,18 +1,95 @@
-name: Debug
+name: debug
 on:
-    repository_dispatch:
-        types: ["my-event2"]
-    workflow_dispatch:
-
+    workflow_dispatch:       
+        
 jobs:
-    publish:
-        name: POC for triggering workflow
+    debug-it:
         runs-on: ubuntu-latest
+        outputs: 
+          bulk_merge: ${{ steps.is_bulk_merge.outputs.IS_BULK_MERGE }}
         steps:
-            - name: Clean up runner
+            - name: print trigger details
               run: |
-                echo "cleaning up previous run"
-            - name: Repository dispatch test
+                echo "hey hello"
+            - name: Checkout code
+              uses: actions/checkout@v3    
+    
+            - name: Read version from package.json using Node.js
+              id: read_version
               run: |
-                echo "I am called!"
+                  LATEST_VERSION=$(node -p "require('./package.json').version")
+                  echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT 
+                  
+                  
+            - name: Use version in subsequent steps
+              run: echo "The latest version from package.json is ${{ steps.read_version.outputs.LATEST_VERSION }}-test"     
               
+            - name: Test run
+              run: echo "Testss heeloo" 
+              
+            - name: Assign a value to tag type
+              id: check_tag_type     
+              run: |
+                  CURRENT_TAG=2027-07
+                  echo "CURRENT_TAG=$CURRENT_TAG" >> $GITHUB_OUTPUT
+
+            - name: Checking if tag if YYYY-MM or monthly-v2
+              id: valid_format
+              run: |
+                  echo "the tag is ${{ steps.check_tag_type.outputs.CURRENT_TAG}}"
+
+                  if [[ ${{ steps.check_tag_type.outputs.CURRENT_TAG }} =~ ^[0-9]{4}-[0-9]{2}$ ]] || [[ ${{ steps.check_tag_type.outputs.CURRENT_TAG }} == "monthly-v2" ]]; then
+                    echo "VALID_FORMAT=true"  >> $GITHUB_OUTPUT
+                    echo "The tag format is valid."
+                  else
+                    echo "VALID_FORMAT=false"  >> $GITHUB_OUTPUT
+                    echo "The tag format is not valid."
+                  fi
+
+            - name: set the bulk merge type
+              id: bulk_merge
+              run: |
+                echo "BULK_MERGE=BULK_MERGE"  >> $GITHUB_OUTPUT  
+
+            - name: check both conditions
+              id: is_bulk_merge
+              run: |
+                if [[ ${{ steps.bulk_merge.outputs.BULK_MERGE }} == 'BULK_MERGE' && ${{ steps.valid_format.outputs.VALID_FORMAT}} == 'true' ]];then
+                  echo "IS_BULK_MERGE=true" >> $GITHUB_OUTPUT
+                else  
+                  echo "IS_BULK_MERGE=false" >> $GITHUB_OUTPUT 
+                fi  
+                
+            - name: trigger the action of other repo
+              if: steps.is_bulk_merge.outputs.IS_BULK_MERGE == 'true'
+              uses: peter-evans/repository-dispatch@v2
+              with:
+                token: ${{ secrets.REPO_ACCESS_TOKEN }}
+                repository: pd21/Test-Githubaction
+                event-type: my-event3   
+            
+            - name: print
+              run: |
+                echo "what the  ${{ steps.bulk_merge.outputs.BULK_MERGE }} "    
+
+    first-job:
+      runs-on: ubuntu-latest
+      needs: run-triggered-workflow
+      if: needs.run-triggered-workflow.outputs.bulk_merge != 'true'
+      steps:
+        - name: First job
+          run: |
+            echo "this is the first job"             
+
+    test:
+      name: second-job
+      needs: run-triggered-workflow
+      if: startsWith(github.event.ref,'refs') && ${{ needs.run-triggered-workflow.outputs.bulk_merge != 'true' }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: second job
+          run: |
+            echo "second job test"
+            echo "${{ github.event.ref}}"
+
+
