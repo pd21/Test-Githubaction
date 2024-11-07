@@ -8,6 +8,9 @@ jobs:
     publish:
         name: Testing repository dispatch called or not
         runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            packages: ["./packages/package1","packages/package2"]
         steps:
             - name: print trigger details
               run: |
@@ -18,6 +21,9 @@ jobs:
             - name: Read version from package.json using Node.js
               id: read_version
               run: |
-                  LATEST_VERSION=$(node -p "require('./package.json').version")
+                  LATEST_VERSION=$(node -p "require('${{ matrix.packages }}/package.json').version")
                   echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
+            - name: Print
+              run: |
+                    echo "the version is ${{ steps.read_version.outputs.LATEST_VERSION}}"      
               
