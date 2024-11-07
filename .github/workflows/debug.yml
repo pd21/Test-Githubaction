@@ -8,24 +8,18 @@ jobs:
     publish:
         name: POC for triggering workflow
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                packages: ["./packages/testrepo","./packages/testrepo2"]
+    
         steps:
             - name: Clean up runner
               run: |
                 echo "cleaning up previous run"
             - name: Repository dispatch test
               run: |
-                echo "I am called!"
-            
-            - name: List files in the directory
-              run: ls -la    
+                echo "I am called!" 
 
             - name: print the details of the packages
               id: abc
               run: |
-                echo "the name of the package is ${{ matrix.packages }}"
                 LATEST_VERSION=$(node -p "require('./package.json').version")
                 echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
             
