@@ -26,20 +26,20 @@ jobs:
                 LATEST_VERSION=$(node -p "require('./package.json').version")
                 echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
             
-            - name: Print the details
-              run: |
-                  echo "the name is ${{steps.abc.outputs.LATEST_VERSION }}" 
+            # - name: Print the details
+            #   run: |
+            #       echo "the name is ${{steps.abc.outputs.LATEST_VERSION }}" 
                 
-            - name: Read the details for package
-              id: package_details
-              run: |
-                VERSION = $(node -p "require('${{ matrix.packages}}/package.json').version")
-                NAME = $(node -p "require('${{ matrix.packages}}/package.json').name")
-                echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-                echo "NAME=$NAME" >> $GITHUB_OUTPUT
+            # - name: Read the details for package
+            #   id: package_details
+            #   run: |
+            #     VERSION = $(node -p "require('${{ matrix.packages}}/package.json').version")
+            #     NAME = $(node -p "require('${{ matrix.packages}}/package.json').name")
+            #     echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            #     echo "NAME=$NAME" >> $GITHUB_OUTPUT
             
-            - name: Print the details
-              run: |
-                echo "the name is ${{steps.package_details.outputs.NAME }}" 
-                echo "the version is ${{steps.package_details.outputs.VERSION }}"    
+            # - name: Print the details
+            #   run: |
+            #     echo "the name is ${{steps.package_details.outputs.NAME }}" 
+            #     echo "the version is ${{steps.package_details.outputs.VERSION }}"    
               
