@@ -22,5 +22,17 @@ jobs:
             - name: print the details of the packages
               run: |
                 echo "the name of the package is ${{ matrix.packages }}"
-
+                
+            - name: Read the details for package
+              id: package_details
+              run: |
+                VERSION = $(node -p "require('${{ matrix.packages}}/package.json').version")
+                NAME = $(node -p "require('${{ matrix.packages}}/package.json').name")
+                echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+                echo "NAME=$NAME" >> $GITHUB_OUTPUT
+            
+            - name: Print the details
+              run: |
+                echo "the name is ${{steps.package_details.outputs.NAME }}" 
+                echo "the version is ${{steps.package_details.outputs.VERSION }}"    
               
