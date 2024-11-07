@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            packages: ["./packages/package1","packages/package2","packages/testpackage"]
+            packages: ["packages/package2","packages/testpackage"]
         steps:
             - name: print trigger details
               run: |
