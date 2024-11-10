@@ -1,12 +1,11 @@
 name: Testing
 on:
-    repository_dispatch:
-        types: ["my-event3"]
-    workflow_dispatch:
+   create:
 
 jobs:
     publish:
         name: Testing repository dispatch called or not
+        if: github.event.ref_type == 'tag'
         runs-on: ubuntu-latest
         strategy:
           matrix:
