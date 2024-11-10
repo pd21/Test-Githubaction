@@ -14,15 +14,16 @@ jobs:
             - name: print trigger details
               run: |
                 echo "hey hello"
-            - name: Checkout code
-              uses: actions/checkout@v3    
+                echo "hey there"
+            # - name: Checkout code
+            #   uses: actions/checkout@v3    
     
-            - name: Read version from package.json using Node.js
-              id: read_version
-              run: |
-                  LATEST_VERSION=$(node -p "require('${{ matrix.packages }}/package.json').version")
-                  echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
-            - name: Print
-              run: |
-                    echo "the version is ${{ steps.read_version.outputs.LATEST_VERSION}}"      
+            # - name: Read version from package.json using Node.js
+            #   id: read_version
+            #   run: |
+            #       LATEST_VERSION=$(node -p "require('${{ matrix.packages }}/package.json').version")
+            #       echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
+            # - name: Print
+            #   run: |
+            #         echo "the version is ${{ steps.read_version.outputs.LATEST_VERSION}}"      
               
