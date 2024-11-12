@@ -2,6 +2,7 @@ name: Release Tag
 run-name: Release Tag(${{ github.ref_name}})
 on:
     create:
+    workflow_dispatch:
 
 jobs:
     checkValid:
@@ -14,7 +15,7 @@ jobs:
             - name: Check for tag
               id: check_format
               run: |
-                if [[ ${{ github.event.ref }} =~ ^[0-9]{4}-(0[1-9]|1[0-2])$ ]]  || [[ ${{ github.event.ref }} == "test-tag1" ]]; then
+                if [[ ${{ github.event.ref }} =~ ^[0-9]{4}-(0[1-9]|1[0-2])$ ]]  || [[ ${{ github.event.ref }} == "test-tag2" ]]; then
                    echo "the tag is either year format or test tag"
                    echo "CONTINUE=true" >> $GITHUB_OUTPUT
                 else
