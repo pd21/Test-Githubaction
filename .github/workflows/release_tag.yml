@@ -55,4 +55,14 @@ jobs:
         steps:
             - name: Print Details
               run: |
-                echo "I am printed when the valid tags dont match"                 
+                echo "I am printed when the valid tags dont match"     
+    
+    testjob:
+        name: This is a test job
+        runs-on: ubuntu-latest
+        needs: checkValid
+        if: startsWith(github.event.ref,'2021-') && ${{ needs.checkValid.outputs.valid_tag != 'true' }}
+        steps:
+            - name: Print test
+              run: |
+                echo "hello"         
