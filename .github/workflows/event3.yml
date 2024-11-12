@@ -1,0 +1,15 @@
+name: Event
+run-name: Event 3 
+on:
+    repository_dispatch:
+        types: [my-event3]
+
+jobs:
+    testing:
+        name: Test the workflow   
+        runs-on: ubuntu-latest
+        steps:
+            - name: Print It
+              run: |
+                echo "Hello there"     
+

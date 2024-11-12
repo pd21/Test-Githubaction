@@ -1,0 +1,52 @@
+name: Release Tag
+run-name: Release Tag(${{ github.ref_name}})
+on:
+    create:
+
+jobs:
+    checkValid:
+        name: Check if it the valid tag or not
+        if: ${{ github.event.ref_type == 'tag'}}
+        runs-on: ubuntu-latest
+        outputs:
+            valid_tag: ${{ steps.is_valid_tag.outputs.IS_VALID_TAG }}
+        steps:
+            - name: Check for tag
+              id: check_format
+              run: |
+                if [[ ${{github.event.ref}} =~ ^[0-9]{4}-(0[1-9]|1[0-2])]]  || [[ ${{github.event.ref}} == "test-tag"]]; then
+                   echo "the tag is either year format or test tag"
+                   echo "CONTINUE=true" >> $GITHUB_OUTPUT
+                else
+                   echo "CONTINUE=false" >> $GITHUB_OUTPUT
+                   echo "the tag is not the format of test tag or year. We will do release"
+                fi
+                
+            - name: Compare branch versions
+              id: is_valid_tag
+              run: |
+                if [[ ${{ steps.check_format.outputs.CONTINUE}} == 'false' ]]; then
+                    echo "the tag was not valid"
+                    echo "IS_VALID_TAG=false" >> $GITHUB_OUTPUT
+
+                else
+                   echo "IS_VALID_TAG=true" >> $GIHUB_OUTPUT
+                fi   
+             
+            - name: trigger the action of other repo
+              if: steps.is_valid_tag.outputs.IS_VALID_TAG == 'true'
+              uses: peter-evans/repository-dispatch@v2
+              with:
+                  token: ${{ secrets.REPO_ACCESS_TOKEN }}
+                  repository: pd21/Test-Githubaction
+                  event-type: my-event3      
+
+    release:
+        name: This is the main release step
+        runs-on: ubuntu-latest
+        needs: checkValid
+        if: ${{ github.event.ref_type == 'tag' && needs.checkValid.outputs.valid_tag != 'true'}}
+        steps:
+            - name: Print Details
+              run: |
+                echo "I am printed when the valid tags dont match"                 
