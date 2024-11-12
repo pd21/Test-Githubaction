@@ -15,7 +15,7 @@ jobs:
             - name: Check for tag
               id: check_format
               run: |
-                if [[ ${{ github.event.ref }} =~ ^[0-9]{4}-(0[1-9]|1[0-2])$ ]]  || [[ ${{ github.event.ref }} == "test-tag4" ]]; then
+                if [[ ${{ github.event.ref }} =~ ^[0-9]{4}-(0[1-9]|1[0-2])$ ]]  || [[ ${{ github.event.ref }} == "test-tag5" ]]; then
                    echo "the tag is either year format or test tag"
                    echo "CONTINUE=true" >> $GITHUB_OUTPUT
                 else
@@ -31,7 +31,7 @@ jobs:
             - name: Compare branch versions
               id: is_valid_tag
               run: |
-                if [[ ${{ steps.bulk_merge.outputs.BULK_MERGE}} == 'hey' ]]; then
+                if [[ ${{ steps.check_format.outputs.CONTINUE}} == 'false' ]]; then
                     echo "the tag was not valid"
                     echo "IS_VALID_TAG=false" >> $GITHUB_OUTPUT
 
