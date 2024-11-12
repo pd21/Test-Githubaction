@@ -61,7 +61,7 @@ jobs:
         name: This is a test job
         runs-on: ubuntu-latest
         needs: checkValid
-        if: ${{ needs.checkValid.outputs.valid_tag == 'true' }}
+        if: startsWith(github.event.ref,'refs') && ${{ needs.checkValid.outputs.valid_tag == 'true' }}
         steps:
             - name: Print test
               run: |
